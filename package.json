@@ -1,0 +1,17 @@
+{
+  "name": "aging-reimagined",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s-ramirez/aging-reimagined.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://github.com/s-ramirez/aging-reimagined#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-serve": "^1.2.0"
+  }
+}
