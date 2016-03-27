@@ -6,6 +6,7 @@ class Message(db.Model):
     content = db.Column(db.String(140))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     post_date = db.Column(db.DateTime)
+	group_id = db.Column(db.Integer, db.ForeignKey('group.id'))
 
     def __init__(self, content, user_id, post_date=None):
         self.content = content
@@ -13,6 +14,3 @@ class Message(db.Model):
         if post_date is None:
             post_date = datetime.utcnow()
         self.post_date = post_date
-
-    def __repr__(self):
-        return '<Message %r>' % self.content
