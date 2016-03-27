@@ -19,10 +19,8 @@ session = api_manager.session
 
 # routing for basic pages (pass routing onto the Angular app)
 @app.route('/')
-@app.route('/about')
-@app.route('/blog')
-def basic_pages(**kwargs):
-    return make_response(open('community/templates/index.html').read())
+def index():
+    return render_template('index.html')
 
 
 # routing for CRUD-style endpoints

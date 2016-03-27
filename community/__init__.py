@@ -11,4 +11,4 @@ app.url_map.strict_slashes = False
 
 import community.core
 import community.models
-import community.controllers
+import community.controllers.MainController

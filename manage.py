@@ -16,14 +16,11 @@ def create_sample_db_entry(api_endpoint, payload):
         headers={'Content-Type': 'application/json'})
     print r.text
 
-
 def create_db():
     db.create_all()
 
-
 def drop_db():
     db.drop_all()
-
 
 def main():
     parser = argparse.ArgumentParser(
