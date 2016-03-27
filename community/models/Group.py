@@ -6,8 +6,8 @@ class Group(db.Model):
 	name = db.Column(db.String(140))
 	created_date = db.Column(db.DateTime)
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-	messages = db.relationship('message', lazy='dynamic')
-	users = db.relationship('user', backref='groups', lazy='dynamic')
+	messages = db.relationship('Message', lazy='dynamic')
+	users = db.relationship('User', backref='groups', lazy='dynamic')
 
 	def __init__(self, name, user_id, created_date=None):
 		self.name = name
