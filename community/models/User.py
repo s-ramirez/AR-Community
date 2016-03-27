@@ -1,4 +1,4 @@
-from angular_flask.core import db
+from community.core import db
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -10,4 +10,6 @@ class User(db.Model):
     def __init__(self, username, name):
         self.username = username
         self.name = name
-        
+
+    def __repr__(self):
+        return '<User %r>' % self.username

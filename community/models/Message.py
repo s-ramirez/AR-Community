@@ -1,10 +1,10 @@
 from datetime import datetime
-from angular_flask.core import db
+from community.core import db
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(140))
-    user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     post_date = db.Column(db.DateTime)
 
     def __init__(self, content, user_id, post_date=None):
@@ -13,3 +13,6 @@ class Message(db.Model):
         if post_date is None:
             post_date = datetime.utcnow()
         self.post_date = post_date
+
+    def __repr__(self):
+        return '<Message %r>' % self.content

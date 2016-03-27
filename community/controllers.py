@@ -4,11 +4,11 @@ from flask import Flask, request, Response
 from flask import render_template, url_for, redirect, send_from_directory
 from flask import send_file, make_response, abort
 
-from angular_flask import app
+from community import app
 
 # routing for API endpoints, generated from the models designated as API_MODELS
-from angular_flask.core import api_manager
-from angular_flask.models import *
+from community.core import api_manager
+from community.models import *
 
 for model_name in app.config['API_MODELS']:
     model_class = app.config['API_MODELS'][model_name]
@@ -22,7 +22,7 @@ session = api_manager.session
 @app.route('/about')
 @app.route('/blog')
 def basic_pages(**kwargs):
-    return make_response(open('angular_flask/templates/index.html').read())
+    return make_response(open('community/templates/index.html').read())
 
 
 # routing for CRUD-style endpoints
@@ -40,7 +40,7 @@ def rest_pages(model_name, item_id=None):
         if item_id is None or session.query(exists().where(
                 model_class.id == item_id)).scalar():
             return make_response(open(
-                'angular_flask/templates/index.html').read())
+                'community/templates/index.html').read())
     abort(404)
 
 
