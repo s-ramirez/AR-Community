@@ -2,7 +2,7 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Add new friend</h2>
+        <h2>Manage contact list</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="cancel()">
           <md-icon aria-label="Close dialog">close</md-icon>
@@ -12,7 +12,7 @@
     <md-dialog-content>
       <div class="md-dialog-content">
         <md-list ng-cloak>
-          <md-subheader class="md-no-sticky">Which users do you wish to add?</md-subheader>
+          <md-subheader class="md-no-sticky">Check or uncheck the people you'd like in your contact list</md-subheader>
           <md-list-item ng-repeat="user in users">
             <p> {{ user.name }} </p>
             <md-checkbox class="md-secondary" ng-model="user.wanted"></md-checkbox>
@@ -26,7 +26,7 @@
        Cancel
       </md-button>
       <md-button class="md-primary md-raised" ng-click="addFriends()" style="margin-right:20px;">
-        Add friends
+        Save
       </md-button>
     </md-dialog-actions>
   </form>

@@ -7,7 +7,7 @@
           </h2>
         </md-toolbar>
         <md-list-item ng-repeat="group in community.groups" ng-click="community.selectConversation(group)" ng-class="{'item-selected': group.selected}">
-          <img ng-src="{{group.image_url}}" class="md-avatar" alt="{{group.name}}" />
+          <md-icon class="md-avatar" alt="{{group.name}}" >group</md-icon>
           <p>{{ group.name }}</p>
           <md-icon class="md-secondary" ng-if="group.selected">delete</md-icon>
         </md-list-item>
@@ -17,18 +17,17 @@
           <div class="md-toolbar-tools">
           <h2>Friends</h2>
           <span flex></span>
-          <md-button class="md-icon-button" ng-click="community.showFriendDialog()" aria-label="Add friend">
+          <md-button class="md-icon-button" ng-click="community.showFriendDialog()" aria-label="Manage friends">
             <md-tooltip md-direction="left">
-              Add a friend
+              Manage friends
             </md-tooltip>
-            <md-icon>add</md-icon>
+            <md-icon>person_add</md-icon>
           </md-button>
         </div>
       </md-toolbar>
       <md-list-item ng-repeat="user in community.users" ng-click="community.selectConversation(user)" ng-class="{'item-selected': user.selected}">
         <img ng-src="{{user.image_url}}" class="md-avatar" alt="{{user.image_url}}" />
         <p>{{ user.name }}</p>
-        <md-icon class="md-secondary" ng-if="user.selected">delete</md-icon>
       </md-list-item>
     </md-list>
     <md-toolbar class="bottom-toolbar md-hue-2">

@@ -5,9 +5,9 @@
     .module('app')
     .controller('CommunityController', CommunityController);
 
-  CommunityController.$inject = ['$rootScope','$interval','$mdDialog','UserService', 'MessageService', 'GroupService'];
+  CommunityController.$inject = ['$rootScope','$interval','$mdDialog','$mdToast','UserService', 'MessageService', 'GroupService'];
 
-  function CommunityController($rootScope, $interval, $mdDialog, userService, messageService, groupService) {
+  function CommunityController($rootScope, $interval, $mdDialog, $mdToast, userService, messageService, groupService) {
     $rootScope.font = 14;
     var vm = this;
 
@@ -69,6 +69,16 @@
         }
       });
     }
+
+    vm.showToast = function(content) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(content)
+          .position({top: false, right: false, left: true, bottom: true})
+          .hideDelay(3000)
+      );
+    };
+
     vm.showDialog = function(ev) {
       $mdDialog.show({
         controller: DialogController,
@@ -86,6 +96,7 @@
         group.users.push(vm.currentUser);
         groupService.createGroup(newGroup, group.users).then(function(response) {
           vm.getCurrentUser();
+          vm.showToast('Group created succesfully!');
         });
       }, function() {
         vm.status = 'You cancelled the dialog.';
@@ -104,6 +115,7 @@
       .then(function(friends) {
         userService.addFriends(friends).then(function(response) {
           vm.getCurrentUser();
+          vm.showToast('Friends updated succesfully!');
         });
       }, function() {
         vm.status = 'You cancelled the dialog.';

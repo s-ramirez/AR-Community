@@ -1,6 +1,7 @@
 md-list-item .md-avatar {
   width: 64px !important;
   height: 64px !important;
+  font-size: 48px;
 }
 
 .md-secondary {
@@ -49,4 +50,16 @@ md-list-item .md-avatar {
 .white-toolbar {
   background-color: white !important;
   color: rgba(0,0,0,0.7) !important;
+}
+
+.md-avatar.material-icons {
+  margin-right: 13px !important;
+}
+
+.message {
+  background-color: #cfcfcf;
+}
+
+.message.my-message {
+  background-color: #FFB74D;
 }
