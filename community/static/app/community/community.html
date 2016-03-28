@@ -1,15 +1,15 @@
 <md-content layout="row" layout-fill>
     <div flex="20" class="sidebar md-whiteframe-2dp">
       <md-list>
-        <md-toolbar class="md-hue-2">
+        <md-toolbar class="md-hue-2" ng-if="!community.groups || community.groups.length">
           <h2 class="md-toolbar-tools">
             <span>Groups</span>
           </h2>
         </md-toolbar>
-        <md-list-item ng-repeat="user in community.users" ng-click="community.selectConversation(user)" ng-class="{'item-selected': user.selected}">
-          <img ng-src="{{user.image_url}}" class="md-avatar" alt="{{user.image_url}}" />
-          <p>{{ user.name }}</p>
-          <md-icon class="md-secondary" ng-if="user.selected">delete</md-icon>
+        <md-list-item ng-repeat="group in community.groups" ng-click="community.selectConversation(group)" ng-class="{'item-selected': group.selected}">
+          <img ng-src="{{group.image_url}}" class="md-avatar" alt="{{group.name}}" />
+          <p>{{ group.name }}</p>
+          <md-icon class="md-secondary" ng-if="group.selected">delete</md-icon>
         </md-list-item>
       </md-list>
       <md-list>
@@ -28,12 +28,12 @@
       <h2 class="md-toolbar-tools">
         <span>Create new group</span>
       </h2>
-      <md-button class="md-fab" aria-label="New group">
+      <md-button class="md-fab" ng-click="community.showDialog()" aria-label="New group">
         <md-icon>add</md-icon>
       </md-button>
     </md-toolbar>
   </div>
-  <div flex="80">
+  <div flex="80" class="messages-container">
     <md-toolbar class="white-toolbar md-whiteframe-1dp">
        <div class="md-toolbar-tools">
          <h2 class="md-flex">{{community.currentConversation ? community.currentConversation.name :'Community'}}</h2>
@@ -42,7 +42,14 @@
      <md-content layout="row" layout-align="center center" ng-if="!community.currentConversation">
        <h2><md-icon>arrow_back</md-icon> Select a conversation on the left bar</h2>
      </md-content>
-     <md-content ng-if="community.currentConversation">
+     <md-content ng-if="community.currentConversation" layout="column">
      </md-content>
+     <md-toolbar ng-if="community.currentConversation" layout="row" class="bottom-toolbar white-toolbar">
+       <md-input-container class="md-block" flex="80">
+         <label>Message</label>
+         <input ng-model="community.message">
+       </md-input-container>
+       <md-button class="md-primary md-raised" ng-click="community.sendMessage(community.message)" flex="20">Send message</md-button>
+     </md-toolbar>
   </div>
 </md-content>

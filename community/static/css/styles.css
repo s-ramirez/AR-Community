@@ -21,10 +21,23 @@ md-list-item .md-avatar {
   background-color: #E64A19;
 }
 
+.messages-container {
+  position: relative;
+}
+
 .bottom-toolbar {
   position: absolute;
   bottom: 0;
   border-top: 1px solid rgba(0,0,0,0.2);
+}
+
+.bottom-toolbar md-input-container{
+  padding: 7px;
+  margin: 20px 25px 0px;
+}
+
+.bottom-toolbar md-input-container .md-errors-spacer{
+  min-height: 0;
 }
 
 .bottom-toolbar .md-fab {

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   </head>
   <body ng-style="{'font-size':$root.font+'px'}">
-      <md-content ng-view layout-fill></md-content>
+      <md-content ng-view ng-cloak layout-fill></md-content>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.js"></script>
@@ -21,4 +21,5 @@
     <script src="{{ url_for('static', filename='app/app.js') }}"></script>
     <script src="{{ url_for('static', filename='app/community/community.controller.js') }}"></script>
     <script src="{{ url_for('static', filename='app/core/user.service.js') }}"></script>
+    <script src="{{ url_for('static', filename='app/core/messages.service.js') }}"></script>
   </body>

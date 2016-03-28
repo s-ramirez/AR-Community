@@ -1,0 +1,37 @@
+<md-dialog aria-label="Create new group" ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Create new group</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <md-input-container layout="column">
+          <label>Group name</label>
+          <input ng-model="name">
+        </md-input-container>
+        <md-list ng-cloak>
+          <md-subheader class="md-no-sticky">Which users do you wish to add to the new group?</md-subheader>
+          <md-list-item ng-repeat="user in users">
+            <p> {{ user.name }} </p>
+            <md-checkbox class="md-secondary" ng-model="user.wanted"></md-checkbox>
+          </md-list-item>
+        </md-list>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="answer('not useful')">
+       Cancel
+      </md-button>
+      <md-button ng-click="answer('useful')" style="margin-right:20px;">
+        Create
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
