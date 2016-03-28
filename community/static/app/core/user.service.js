@@ -27,8 +27,14 @@
           var temp = response.data.objects;
           var users = [];
           for(var i = 0; i < temp.length; i++) {
-            if (temp[i].id != currentUser.id)
+            if (temp[i].id != currentUser.id){
+              for(var j = 0; j < currentUser.friends.length; j++) {
+                if(temp[i].id == currentUser.friends[j].id) {
+                  temp[i].wanted = true;
+                }
+              }
               users.push(temp[i]);
+            }
           }
           return users;
         } else {
@@ -37,9 +43,17 @@
       });
     }
 
+    function addFriends(friends) {
+      currentUser.friends = friends;
+      return $http.put('/api/user/1', {friends: friends}).then(function (response) {
+        return response;
+      });
+    }
+
     return {
       getCurrentUser: getCurrentUser,
-      getAllUsers: getAllUsers
+      getAllUsers: getAllUsers,
+      addFriends: addFriends
     }
   }
 })();
