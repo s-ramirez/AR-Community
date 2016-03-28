@@ -1,1 +1,48 @@
-<h1>YO!</h1>
+<md-content layout="row" layout-fill>
+    <div flex="20" class="sidebar md-whiteframe-2dp">
+      <md-list>
+        <md-toolbar class="md-hue-2">
+          <h2 class="md-toolbar-tools">
+            <span>Groups</span>
+          </h2>
+        </md-toolbar>
+        <md-list-item ng-repeat="user in community.users" ng-click="community.selectConversation(user)" ng-class="{'item-selected': user.selected}">
+          <img ng-src="{{user.image_url}}" class="md-avatar" alt="{{user.image_url}}" />
+          <p>{{ user.name }}</p>
+          <md-icon class="md-secondary" ng-if="user.selected">delete</md-icon>
+        </md-list-item>
+      </md-list>
+      <md-list>
+        <md-toolbar class="md-hue-2">
+          <h2 class="md-toolbar-tools">
+          <span>Friends</span>
+        </h2>
+      </md-toolbar>
+      <md-list-item ng-repeat="user in community.users" ng-click="community.selectConversation(user)" ng-class="{'item-selected': user.selected}">
+        <img ng-src="{{user.image_url}}" class="md-avatar" alt="{{user.image_url}}" />
+        <p>{{ user.name }}</p>
+        <md-icon class="md-secondary" ng-if="user.selected">delete</md-icon>
+      </md-list-item>
+    </md-list>
+    <md-toolbar class="bottom-toolbar md-hue-2">
+      <h2 class="md-toolbar-tools">
+        <span>Create new group</span>
+      </h2>
+      <md-button class="md-fab" aria-label="New group">
+        <md-icon>add</md-icon>
+      </md-button>
+    </md-toolbar>
+  </div>
+  <div flex="80">
+    <md-toolbar class="white-toolbar md-whiteframe-1dp">
+       <div class="md-toolbar-tools">
+         <h2 class="md-flex">{{community.currentConversation ? community.currentConversation.name :'Community'}}</h2>
+       </div>
+     </md-toolbar>
+     <md-content layout="row" layout-align="center center" ng-if="!community.currentConversation">
+       <h2><md-icon>arrow_back</md-icon> Select a conversation on the left bar</h2>
+     </md-content>
+     <md-content ng-if="community.currentConversation">
+     </md-content>
+  </div>
+</md-content>

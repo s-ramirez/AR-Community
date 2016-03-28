@@ -1,51 +1,39 @@
-
-.masthead {
-	padding: 30px 0 30px;
-	margin-bottom: 0;
+md-list-item .md-avatar {
+  width: 64px !important;
+  height: 64px !important;
 }
 
-.masthead h1 {
-	font-size: 75px;
-	line-height: 1;
-	letter-spacing: -2px;
-	font-weight: bold;
+.md-secondary {
+  margin-top: 0!important;
 }
 
-.header-section {
-	padding: 50px 0;
-	background: #222;
-	position: absolute;
-	top: 40px;
-	left: 0px;
-	width: 100%;
-	padding-left: 0;
-	margin-left: 0;
-	color: #FFF;
+.sidebar {
+  color: white;
+  background-color: #FF5722;
+  position: relative;
 }
 
-.header-row {
-	width: 960px;
-	margin: auto;
+.sidebar md-list {
+  padding: 0;
 }
 
-.header-push {
-	height: 250px;
+.sidebar .item-selected {
+  background-color: #E64A19;
 }
 
-.main {
-	padding-top: 20px;
-	min-height: 370px;
+.bottom-toolbar {
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid rgba(0,0,0,0.2);
 }
 
-.footer-left {
-	float: left;
+.bottom-toolbar .md-fab {
+  position: absolute;
+  right: 10px;
+  top: -3px;
 }
 
-.footer-right {
-	float: right;
-}
-
-.flashes {
-	list-style-type: none;
-	margin-left: 0;
+.white-toolbar {
+  background-color: white !important;
+  color: rgba(0,0,0,0.7) !important;
 }

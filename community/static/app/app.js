@@ -3,11 +3,11 @@
 
   angular
     .module('app', [
-        'ngTouch',
-        'ngRoute'
-    ]).config(routeConfig);
+        'ngRoute',
+        'ngMaterial'
+    ]).config(config);
 
-  function routeConfig($routeProvider) {
+  function config($routeProvider, $mdThemingProvider) {
     $routeProvider
       .when('/', {
         templateUrl: '/static/app/community/community.html',
@@ -17,5 +17,9 @@
       .otherwise({
         redirectTo: '/'
       });
+
+      $mdThemingProvider.theme('default')
+        .primaryPalette('deep-orange')
+        .accentPalette('orange');
   }
 })();
