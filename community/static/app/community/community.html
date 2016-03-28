@@ -43,6 +43,11 @@
        <h2><md-icon>arrow_back</md-icon> Select a conversation on the left bar</h2>
      </md-content>
      <md-content ng-if="community.currentConversation" layout="column">
+       <md-list>
+         <md-list-item ng-repeat="message in community.messages" ng-class="{'item-selected': message.selected}">
+           <p>{{ message.content }}</p>
+         </md-list-item>
+       </md-list>
      </md-content>
      <md-toolbar ng-if="community.currentConversation" layout="row" class="bottom-toolbar white-toolbar">
        <md-input-container class="md-block" flex="80">

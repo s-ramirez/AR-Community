@@ -5,9 +5,9 @@
     .module('app')
     .controller('CommunityController', CommunityController);
 
-  CommunityController.$inject = ['$rootScope','$interval','$mdDialog','UserService', 'MessageService'];
+  CommunityController.$inject = ['$rootScope','$interval','$mdDialog','UserService', 'MessageService', 'GroupService'];
 
-  function CommunityController($rootScope, $interval, $mdDialog, userService, messageService) {
+  function CommunityController($rootScope, $interval, $mdDialog, userService, messageService, groupService) {
     $rootScope.font = 14;
     var vm = this;
 
@@ -32,14 +32,17 @@
         vm.currentConversation.selected = false;
       conv.selected = true;
       vm.currentConversation = conv;
+      vm.loadMessages();
     }
 
     vm.loadMessages = function () {
-      messageService.getMessages().then(function (response) {
-        if(response) {
-          vm.messages = response;
-        }
-      });
+      if(vm.currentConversation) {
+        messageService.getMessages(vm.currentUser.id, vm.currentConversation.id).then(function (response) {
+          if(response) {
+            vm.messages = response;
+          }
+        });
+      }
     }
 
     vm.sendMessage = function (content) {
@@ -47,6 +50,12 @@
         content: content,
         user_id: vm.currentUser.id
       }
+      if(vm.currentConversation.username){
+        message.rec_user_id = vm.currentConversation.id;
+      } else {
+        message.group_id = vm.currentConversation.id;
+      }
+
       messageService.sendMessage(message).then(function(response){
         if(response) {
           vm.message = "";
@@ -63,8 +72,11 @@
         clickOutsideToClose:true,
         fullscreen: false
       })
-      .then(function(answer) {
-        vm.status = 'You said the information was "' + answer + '".';
+      .then(function(group) {
+        group.user_id = vm.currentUser.id;
+        groupService.createGroup(group).then(function(response) {
+          debugger;
+        });
       }, function() {
         vm.status = 'You cancelled the dialog.';
       });
@@ -84,8 +96,18 @@
     $scope.cancel = function() {
       $mdDialog.cancel();
     };
-    $scope.answer = function(answer) {
-      $mdDialog.hide(answer);
+    $scope.createGroup = function() {
+      var group = {
+        name: $scope.name,
+        users: []
+      };
+      for(var i = 0; i < $scope.users.length; i++) {
+        if($scope.users[i].wanted) {
+          group.users.push($scope.users[i]);
+        }
+      }
+      $mdDialog.hide(group);
     };
+
   }
 })();
