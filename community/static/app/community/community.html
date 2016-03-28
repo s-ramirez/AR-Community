@@ -9,7 +9,9 @@
         <md-list-item ng-repeat="group in community.groups" ng-click="community.selectConversation(group)" ng-class="{'item-selected': group.selected}">
           <img ng-src="{{group.image_url}}" class="md-avatar" alt="{{group.name}}" />
           <p>{{ group.name }}</p>
-          <md-icon class="md-secondary" ng-if="group.selected">delete</md-icon>
+			 <md-button ng-click="community.showConfirm($event, group)">
+          	<md-icon class="md-secondary" ng-if="group.selected">delete</md-icon>
+			 </md-button>
         </md-list-item>
       </md-list>
       <md-list>
@@ -21,7 +23,9 @@
       <md-list-item ng-repeat="user in community.users" ng-click="community.selectConversation(user)" ng-class="{'item-selected': user.selected}">
         <img ng-src="{{user.image_url}}" class="md-avatar" alt="{{user.image_url}}" />
         <p>{{ user.name }}</p>
-        <md-icon class="md-secondary" ng-if="user.selected">delete</md-icon>
+		  <md-button ng-click="community.showConfirm($event, user)">
+          <md-icon class="md-secondary" ng-if="user.selected">delete</md-icon>
+		  </md-button>
       </md-list-item>
     </md-list>
     <md-toolbar class="bottom-toolbar md-hue-2">

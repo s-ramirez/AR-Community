@@ -82,6 +82,21 @@
       });
     }
 
+	vm.showConfirm = function(ev, user) {
+    var confirm = $mdDialog.confirm()
+          .title('Are you sure?'))
+          .textContent('Do you want to delete '.concat(user.name, '?'))
+          .ariaLabel('Delete user')
+          .targetEvent(ev)
+          .ok('Yes')
+          .cancel('No');
+    $mdDialog.show(confirm).then(function() {
+      console.log('confirmed');
+    }, function() {
+      console.log('canceled');
+    });
+  };
+
     vm.init();
     $interval(function () { vm.loadMessages() }, 5000);
   }
