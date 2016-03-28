@@ -8,10 +8,12 @@
   GroupService.$inject = ['$http'];
 
   function GroupService($http) {
-    function createGroup(group) {
+    function createGroup(group, users) {
       return $http.post('/api/group', group).then(function(response) {
         if(response) {
-          return response.data;
+          return $http.put('/api/group/'+response.data.id, {group_user : users}).then(function(response) {
+            return response.data;
+          });
         } else {
           return false;
         }

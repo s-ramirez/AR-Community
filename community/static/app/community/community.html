@@ -7,7 +7,7 @@
           </h2>
         </md-toolbar>
         <md-list-item ng-repeat="group in community.groups" ng-click="community.selectConversation(group)" ng-class="{'item-selected': group.selected}">
-          <img ng-src="{{group.image_url}}" class="md-avatar" alt="{{group.name}}" />
+          <md-icon class="md-avatar" alt="{{group.name}}" >group</md-icon>
           <p>{{ group.name }}</p>
 			 <md-button ng-click="community.showConfirm($event, group)">
           	<md-icon class="md-secondary" ng-if="group.selected">delete</md-icon>
@@ -16,16 +16,20 @@
       </md-list>
       <md-list>
         <md-toolbar class="md-hue-2">
-          <h2 class="md-toolbar-tools">
-          <span>Friends</span>
-        </h2>
+          <div class="md-toolbar-tools">
+          <h2>Friends</h2>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-click="community.showFriendDialog()" aria-label="Manage friends">
+            <md-tooltip md-direction="left">
+              Manage friends
+            </md-tooltip>
+            <md-icon>person_add</md-icon>
+          </md-button>
+        </div>
       </md-toolbar>
       <md-list-item ng-repeat="user in community.users" ng-click="community.selectConversation(user)" ng-class="{'item-selected': user.selected}">
         <img ng-src="{{user.image_url}}" class="md-avatar" alt="{{user.image_url}}" />
         <p>{{ user.name }}</p>
-		  <md-button ng-click="community.showConfirm($event, user)">
-          <md-icon class="md-secondary" ng-if="user.selected">delete</md-icon>
-		  </md-button>
       </md-list-item>
     </md-list>
     <md-toolbar class="bottom-toolbar md-hue-2">
@@ -48,8 +52,10 @@
      </md-content>
      <md-content ng-if="community.currentConversation" layout="column">
        <md-list>
-         <md-list-item ng-repeat="message in community.messages" ng-class="{'item-selected': message.selected}">
-           <p>{{ message.content }}</p>
+         <md-list-item ng-repeat="message in community.messages" class="message"
+           ng-class="{'my-message': message.user_id == community.currentUser.id }">
+           <p><b>{{::(message.user_id == community.currentUser.id) ? 'I say:' : community.getUser(message.user_id) + 'says:'}}</b>
+             {{ message.content }}</p>
          </md-list-item>
        </md-list>
      </md-content>

@@ -5,22 +5,19 @@
     .module('app')
     .controller('CommunityController', CommunityController);
 
-  CommunityController.$inject = ['$rootScope','$interval','$mdDialog','UserService', 'MessageService', 'GroupService'];
+  CommunityController.$inject = ['$rootScope','$interval','$mdDialog','$mdToast','UserService', 'MessageService', 'GroupService'];
 
-  function CommunityController($rootScope, $interval, $mdDialog, userService, messageService, groupService) {
+  function CommunityController($rootScope, $interval, $mdDialog, $mdToast, userService, messageService, groupService) {
     $rootScope.font = 14;
     var vm = this;
 
-    vm.init = function() {
-      userService.getCurrentUser().then(function(user) {
+    vm.getCurrentUser = function () {
+      return userService.getCurrentUser().then(function(user) {
         vm.currentUser = user;
         vm.groups = vm.currentUser.groups;
-
-        userService.getAllUsers().then(function(users) {
-          vm.users = users;
-        });
+        vm.users = vm.currentUser.friends;
       });
-    }
+    };
 
     vm.zoom = function(number) {
       $rootScope.font +=number;
@@ -45,6 +42,15 @@
       }
     }
 
+    vm.getUser = function(userId) {
+      for(var i = 0; i < vm.users.length; i++) {
+        if(vm.users[i].id == userId) {
+          return vm.users[i].name;
+        }
+      }
+      return 'None';
+    }
+
     vm.sendMessage = function (content) {
       var message = {
         content: content,
@@ -63,6 +69,16 @@
         }
       });
     }
+
+    vm.showToast = function(content) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(content)
+          .position({top: false, right: false, left: true, bottom: true})
+          .hideDelay(3000)
+      );
+    };
+
     vm.showDialog = function(ev) {
       $mdDialog.show({
         controller: DialogController,
@@ -73,9 +89,14 @@
         fullscreen: false
       })
       .then(function(group) {
-        group.user_id = vm.currentUser.id;
-        groupService.createGroup(group).then(function(response) {
-          debugger;
+        var newGroup = {
+          name: group.name,
+          user_id: vm.currentUser.id
+        }
+        group.users.push(vm.currentUser);
+        groupService.createGroup(newGroup, group.users).then(function(response) {
+          vm.getCurrentUser();
+          vm.showToast('Group created succesfully!');
         });
       }, function() {
         vm.status = 'You cancelled the dialog.';
@@ -97,6 +118,27 @@
     });
   };
 
+    vm.showFriendDialog = function(ev) {
+      $mdDialog.show({
+        controller: FriendDialogController,
+        templateUrl: '/static/app/community/friend.tmpl.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true,
+        fullscreen: false
+      })
+      .then(function(friends) {
+        userService.addFriends(friends).then(function(response) {
+          vm.getCurrentUser();
+          vm.showToast('Friends updated succesfully!');
+        });
+      }, function() {
+        vm.status = 'You cancelled the dialog.';
+      });
+    }
+    vm.init = function() {
+      vm.getCurrentUser();
+    };
     vm.init();
     $interval(function () { vm.loadMessages() }, 5000);
   }
@@ -118,11 +160,33 @@
       };
       for(var i = 0; i < $scope.users.length; i++) {
         if($scope.users[i].wanted) {
+          delete $scope.users[i].wanted;
           group.users.push($scope.users[i]);
         }
       }
       $mdDialog.hide(group);
     };
-
   }
+
+    function FriendDialogController($scope, $mdDialog, UserService) {
+      UserService.getAllUsers().then(function(users) {
+        $scope.users = users;
+      });
+      $scope.hide = function() {
+        $mdDialog.hide();
+      };
+      $scope.cancel = function() {
+        $mdDialog.cancel();
+      };
+      $scope.addFriends = function() {
+        var friends = [];
+        for(var i = 0; i < $scope.users.length; i++) {
+          if($scope.users[i].wanted) {
+            delete $scope.users[i].wanted;
+            friends.push($scope.users[i]);
+          }
+        }
+        $mdDialog.hide(friends);
+      };
+    }
 })();

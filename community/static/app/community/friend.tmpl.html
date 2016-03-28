@@ -1,0 +1,33 @@
+<md-dialog aria-label="Add new friend" ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Manage contact list</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <md-list ng-cloak>
+          <md-subheader class="md-no-sticky">Check or uncheck the people you'd like in your contact list</md-subheader>
+          <md-list-item ng-repeat="user in users">
+            <p> {{ user.name }} </p>
+            <md-checkbox class="md-secondary" ng-model="user.wanted"></md-checkbox>
+          </md-list-item>
+        </md-list>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="cancel()">
+       Cancel
+      </md-button>
+      <md-button class="md-primary md-raised" ng-click="addFriends()" style="margin-right:20px;">
+        Save
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
