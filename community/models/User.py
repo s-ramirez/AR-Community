@@ -6,7 +6,7 @@ class User(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	username = db.Column(db.String(32), unique = True)
 	name = db.Column(db.String(32))
-	groups = db.relationship(Group, backref='group_user')
+	groups = db.relationship(Group, secondary=groups, backref=db.backref('group_user', lazy='dynamic'))
 
 	def __init__(self, username, name):
 		self.username = username
