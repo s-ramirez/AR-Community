@@ -63,3 +63,8 @@ md-list-item .md-avatar {
 .message.my-message {
   background-color: #FFB74D;
 }
+
+md-toast.custom-toast {
+  top: 64px;
+  right: 0px;
+}

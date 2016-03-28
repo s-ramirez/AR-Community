@@ -5,17 +5,17 @@
     .module('app')
     .controller('CommunityController', CommunityController);
 
-  CommunityController.$inject = ['$rootScope','$interval','$mdDialog','$mdToast','UserService', 'MessageService', 'GroupService'];
+  CommunityController.$inject = ['$rootScope','$interval', '$timeout', '$mdDialog','$mdToast','UserService', 'MessageService', 'GroupService'];
 
-  function CommunityController($rootScope, $interval, $mdDialog, $mdToast, userService, messageService, groupService) {
+  function CommunityController($rootScope, $interval, $timeout, $mdDialog, $mdToast, userService, messageService, groupService) {
     $rootScope.font = 14;
     var vm = this;
 
     vm.getCurrentUser = function () {
       return userService.getCurrentUser().then(function(user) {
         vm.currentUser = user;
-        vm.groups = vm.currentUser.groups;
-        vm.users = vm.currentUser.friends;
+        vm.groups = angular.copy(vm.currentUser.groups);
+        vm.users = angular.copy(vm.currentUser.friends);
       });
     };
 
@@ -71,12 +71,11 @@
     }
 
     vm.showToast = function(content) {
-      $mdToast.show(
-        $mdToast.simple()
-          .textContent(content)
-          .position({top: false, right: false, left: true, bottom: true})
-          .hideDelay(3000)
-      );
+      vm.toast = content;
+      vm.currentConversation = false;
+      $timeout(function() {
+        vm.toast = null;
+      }, 3600);
     };
 
     vm.showDialog = function(ev) {
@@ -105,14 +104,17 @@
 
 	vm.showConfirm = function(ev, user) {
     var confirm = $mdDialog.confirm()
-          .title('Are you sure?'))
-          .textContent('Do you want to delete '.concat(user.name, '?'))
+          .title('Are you sure?')
+          .textContent('Do you want to delete the group: '.concat(user.name, '?'))
           .ariaLabel('Delete user')
           .targetEvent(ev)
           .ok('Yes')
           .cancel('No');
     $mdDialog.show(confirm).then(function() {
-      console.log('confirmed');
+      groupService.deleteGroup(user).then(function() {
+        vm.getCurrentUser();
+        vm.showToast('Group deleted succesfully!');
+      });
     }, function() {
       console.log('canceled');
     });

@@ -9,9 +9,9 @@
         <md-list-item ng-repeat="group in community.groups" ng-click="community.selectConversation(group)" ng-class="{'item-selected': group.selected}">
           <md-icon class="md-avatar" alt="{{group.name}}" >group</md-icon>
           <p>{{ group.name }}</p>
-			 <md-button ng-click="community.showConfirm($event, group)">
-          	<md-icon class="md-secondary" ng-if="group.selected">delete</md-icon>
-			 </md-button>
+          <md-button ng-if="group.selected" ng-click="community.showConfirm($event, group)">
+            	<md-icon class="md-secondary">delete</md-icon>
+          </md-button>
         </md-list-item>
       </md-list>
       <md-list>
@@ -42,6 +42,9 @@
     </md-toolbar>
   </div>
   <div flex="80" class="messages-container">
+    <md-toast class="md-default-theme custom-toast" ng-if="community.toast">
+      <div class="md-toast-content" flex>{{community.toast}}</div>
+    </md-toast>
     <md-toolbar class="white-toolbar md-whiteframe-1dp">
        <div class="md-toolbar-tools">
          <h2 class="md-flex">{{community.currentConversation ? community.currentConversation.name :'Community'}}</h2>

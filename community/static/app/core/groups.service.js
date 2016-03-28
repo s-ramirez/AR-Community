@@ -20,8 +20,15 @@
       })
     }
 
+    function deleteGroup(group) {
+      if(group.selected)
+        delete group.selected;
+      return $http.delete('/api/group/' + group.id);
+    }
+
     return {
-      createGroup: createGroup
+      createGroup: createGroup,
+      deleteGroup: deleteGroup
     }
   }
 })();
