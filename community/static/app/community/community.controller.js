@@ -8,7 +8,7 @@
   CommunityController.$inject = ['$rootScope','$interval', '$timeout', '$mdDialog','$mdToast','UserService', 'MessageService', 'GroupService'];
 
   function CommunityController($rootScope, $interval, $timeout, $mdDialog, $mdToast, userService, messageService, groupService) {
-    $rootScope.font = 14;
+    $rootScope.font = 16;
     var vm = this;
 
     vm.getCurrentUser = function () {
@@ -18,10 +18,11 @@
         vm.users = angular.copy(vm.currentUser.friends);
       });
     };
-
+    
     vm.zoom = function(number) {
       $rootScope.font +=number;
     }
+
 
     vm.selectConversation = function(conv) {
       vm.message = "";

@@ -11,7 +11,7 @@
     var currentUser = null;
 
     function getCurrentUser() {
-      return $http.get('/api/user/1').then(function (response) {
+      return $http.get('/api/user/2').then(function (response) {
         if(response) {
           currentUser = response.data;
           return currentUser;
@@ -45,7 +45,7 @@
 
     function addFriends(friends) {
       currentUser.friends = friends;
-      return $http.put('/api/user/1', {friends: friends}).then(function (response) {
+      return $http.put('/api/user/2', {friends: friends}).then(function (response) {
         return response;
       });
     }

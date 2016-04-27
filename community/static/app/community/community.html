@@ -1,4 +1,8 @@
 <md-content layout="row" layout-fill>
+    <span class="zoom">
+      <span ng-click="community.zoom(2)">+</span>
+      <span ng-click="community.zoom(-2)">-</span>
+    </span>
     <div flex="20" class="sidebar md-whiteframe-2dp">
       <md-list>
         <md-toolbar class="md-hue-2" ng-if="!community.groups || community.groups.length">
@@ -57,7 +61,7 @@
        <md-list>
          <md-list-item ng-repeat="message in community.messages" class="message"
            ng-class="{'my-message': message.user_id == community.currentUser.id }">
-           <p><b>{{::(message.user_id == community.currentUser.id) ? 'I say:' : community.getUser(message.user_id) + 'says:'}}</b>
+           <p><b>{{::(message.user_id == community.currentUser.id) ? 'I say:' : community.getUser(message.user_id) + ' says:'}}</b>
              {{ message.content }}</p>
          </md-list-item>
        </md-list>
